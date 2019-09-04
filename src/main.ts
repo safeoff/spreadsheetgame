@@ -1,6 +1,9 @@
+import { BG } from "./BG";
+
 class Main {
 	private readonly canvas: HTMLCanvasElement;
 	private readonly ctx: CanvasRenderingContext2D;
+	private BG: BG;
 
 	// タイマーイベント開始
 	constructor() {
@@ -8,6 +11,8 @@ class Main {
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 		this.ctx = this.canvas.getContext('2d');
+		this.BG = new BG();
+		this.BG.drawBG();
 		window.requestAnimationFrame(() => this.draw());
 	}
 
@@ -15,8 +20,9 @@ class Main {
 	draw() {
 		// update
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.fillStyle = "rgb(233, 214, 178)";
-		this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.drawImage(this.BG.getBGimg(), 0, 0);
+		// this.ctx.fillStyle = "rgb(233, 214, 178)";
+		// this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 		// roop
 		window.requestAnimationFrame(() => this.draw());
 	}
