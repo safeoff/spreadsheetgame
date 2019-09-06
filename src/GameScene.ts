@@ -23,8 +23,6 @@ export class GameScene {
 
 	// ゲームの状態を更新する
 	update(): void {
-		// debug: 0-100でループ
-		this.debug += (this.debug < 100) ? 1 : -100;
 	}
 
 	// 内部バッファに画像を描画する
