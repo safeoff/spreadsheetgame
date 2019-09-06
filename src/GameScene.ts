@@ -2,23 +2,19 @@ import { Images } from "./Images";
 
 export class GameScene {
 	// 各画像と内部バッファ
-	private Images: Images;
+	private images: Images;
 	private buff = document.createElement("canvas");
-
-	// canvasの幅と高さ
-	width = window.innerWidth;
-	height = this.width * 1.5;
 
 	// debug param
 	private debug = 0;
 
 	constructor() {
 		// 画像読み込み
-		this.Images = new Images();
+		this.images = new Images();
 
 		// 内部バッファの幅と高さ
-		this.buff.width = this.width;
-		this.buff.height= this.height;
+		this.buff.width = this.images.width;
+		this.buff.height= this.images.height;
 	}
 
 	// ゲームの状態を更新する
@@ -28,10 +24,17 @@ export class GameScene {
 	// 内部バッファに画像を描画する
 	draw(): HTMLCanvasElement {
 		const ctx = this.buff.getContext('2d');
-		ctx.clearRect(0, 0, this.width, this.height);
+		ctx.clearRect(0, 0, this.images.width, this.images.height);
 
-		// debug: ラフを描画。更新テストのためにアニメーションさせてみる。
-		ctx.drawImage(this.Images.rough, this.debug, 0, this.width, this.height);
+		// debug: ラフを描画
+		ctx.drawImage(this.images.rough, 0, 0, this.images.width, this.images.height);
+
+		// debug: 左手をアニメーションさせてみる。
+		// 30frameで切り替わる
+		const leftPos = this.images.getLeftPos();
+		this.images.updateLeftTime();
+		ctx.drawImage(this.images.left, leftPos[0], leftPos[1], leftPos[2], leftPos[3],
+			leftPos[4], leftPos[5], leftPos[6], leftPos[7]);
 
 		return this.buff;
 	}
