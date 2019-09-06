@@ -11,6 +11,7 @@ export class Images {
 	height = this.width * 1.5;
 	scale = this.width / 480;
 
+	// debug 左手のアニメーション時間
 	leftTime = 59;
 
 	constructor() {
@@ -19,8 +20,13 @@ export class Images {
 		this.left.src = left;
 	}
 
-	getLeftPos(): number[] {
+	// 左手の状態を更新して位置を返す
+	updateLeft(): number[] {
+		// 左手のアニメーション時間を更新
+		this.leftTime += (this.leftTime > 0) ? -1 : 59;
+
 		// ソースのx,y,w,h,canvasのx,y,w,h
+		// debug: 30frameで切り替わるようにしてみた
 		let a = new Array();
 		a.push(Math.floor(this.leftTime / 30) * 53);
 		a.push(0);
@@ -31,9 +37,5 @@ export class Images {
 		a.push(53 * this.scale);
 		a.push(53 * this.scale);
 		return a;
-	}
-
-	updateLeftTime(): void {
-		this.leftTime += (this.leftTime > 0) ? -1 : 59;
 	}
 }
