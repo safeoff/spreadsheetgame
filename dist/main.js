@@ -97,15 +97,27 @@ eval("module.exports = \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAeAAAALQC
 
 /***/ }),
 
-/***/ "./src/BG.ts":
-/*!*******************!*\
-  !*** ./src/BG.ts ***!
-  \*******************/
-/*! exports provided: BG */
+/***/ "./src/GameScene.ts":
+/*!**************************!*\
+  !*** ./src/GameScene.ts ***!
+  \**************************/
+/*! exports provided: GameScene */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"BG\", function() { return BG; });\n/* harmony import */ var _img_rough_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/rough.png */ \"./img/rough.png\");\n/* harmony import */ var _img_rough_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_img_rough_png__WEBPACK_IMPORTED_MODULE_0__);\n\nvar BG = /** @class */ (function () {\n    function BG() {\n        // canvas幅\n        this.width = window.innerWidth;\n        // canvas高さ\n        this.height = this.width * 1.5;\n        // 背景画像\n        this.BGimg = document.createElement(\"img\");\n        // 内部バッファ\n        this.buff = document.createElement(\"canvas\");\n        // 画像読み込み\n        this.BGimg.src = _img_rough_png__WEBPACK_IMPORTED_MODULE_0__;\n        // 内部バッファ\n        this.buff.width = this.width;\n        this.buff.height = this.height;\n    }\n    BG.prototype.getBGimg = function () {\n        return this.buff;\n    };\n    BG.prototype.drawBG = function () {\n        var ctx = this.buff.getContext('2d');\n        ctx.drawImage(this.BGimg, 0, 0, this.width, this.height);\n    };\n    return BG;\n}());\n\n\n\n//# sourceURL=webpack:///./src/BG.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"GameScene\", function() { return GameScene; });\n/* harmony import */ var _Images__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Images */ \"./src/Images.ts\");\n\nvar GameScene = /** @class */ (function () {\n    function GameScene() {\n        this.buff = document.createElement(\"canvas\");\n        // canvasの幅と高さ\n        this.width = window.innerWidth;\n        this.height = this.width * 1.5;\n        // debug param\n        this.debug = 0;\n        // 画像読み込み\n        this.Images = new _Images__WEBPACK_IMPORTED_MODULE_0__[\"Images\"]();\n        // 内部バッファの幅と高さ\n        this.buff.width = this.width;\n        this.buff.height = this.height;\n    }\n    // ゲームの状態を更新する\n    GameScene.prototype.update = function () {\n        // debug: 0-100でループ\n        this.debug += (this.debug < 100) ? 1 : -100;\n    };\n    // 内部バッファに画像を描画する\n    GameScene.prototype.draw = function () {\n        var ctx = this.buff.getContext('2d');\n        ctx.clearRect(0, 0, this.width, this.height);\n        // debug: ラフを描画。更新テストのためにアニメーションさせてみる。\n        ctx.drawImage(this.Images.rough, this.debug, 0, this.width, this.height);\n        return this.buff;\n    };\n    return GameScene;\n}());\n\n\n\n//# sourceURL=webpack:///./src/GameScene.ts?");
+
+/***/ }),
+
+/***/ "./src/Images.ts":
+/*!***********************!*\
+  !*** ./src/Images.ts ***!
+  \***********************/
+/*! exports provided: Images */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Images\", function() { return Images; });\n/* harmony import */ var _img_rough_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../img/rough.png */ \"./img/rough.png\");\n/* harmony import */ var _img_rough_png__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_img_rough_png__WEBPACK_IMPORTED_MODULE_0__);\n\nvar Images = /** @class */ (function () {\n    function Images() {\n        // 背景画像\n        this.rough = document.createElement(\"img\");\n        // 画像読み込み\n        this.rough.src = _img_rough_png__WEBPACK_IMPORTED_MODULE_0__;\n    }\n    return Images;\n}());\n\n\n\n//# sourceURL=webpack:///./src/Images.ts?");
 
 /***/ }),
 
@@ -117,7 +129,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _BG__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BG */ \"./src/BG.ts\");\n\nvar Main = /** @class */ (function () {\n    // タイマーイベント開始\n    function Main() {\n        var _this = this;\n        this.canvas = document.getElementById('canvas');\n        this.canvas.width = window.innerWidth;\n        this.canvas.height = window.innerHeight;\n        this.ctx = this.canvas.getContext('2d');\n        this.BG = new _BG__WEBPACK_IMPORTED_MODULE_0__[\"BG\"]();\n        this.BG.drawBG();\n        window.requestAnimationFrame(function () { return _this.draw(); });\n    }\n    // 更新と描画\n    Main.prototype.draw = function () {\n        var _this = this;\n        // update\n        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);\n        this.ctx.drawImage(this.BG.getBGimg(), 0, 0);\n        // this.ctx.fillStyle = \"rgb(233, 214, 178)\";\n        // this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);\n        // roop\n        window.requestAnimationFrame(function () { return _this.draw(); });\n    };\n    return Main;\n}());\nwindow.onload = function () {\n    new Main();\n};\n\n\n//# sourceURL=webpack:///./src/main.ts?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _GameScene__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./GameScene */ \"./src/GameScene.ts\");\n\nvar Main = /** @class */ (function () {\n    // タイマーイベント開始\n    function Main() {\n        var _this = this;\n        // canvasを取得・設定\n        this.canvas = document.getElementById('canvas');\n        this.canvas.width = window.innerWidth;\n        this.canvas.height = window.innerHeight;\n        this.ctx = this.canvas.getContext('2d');\n        // ゲーム画面を初期化\n        this.GameScene = new _GameScene__WEBPACK_IMPORTED_MODULE_0__[\"GameScene\"]();\n        window.requestAnimationFrame(function () { return _this.draw(); });\n    }\n    // TODO: タップイベントのリスナーを入れる？\n    // 更新と描画\n    Main.prototype.draw = function () {\n        // TODO: TitleかGameかResultか、みたいな分岐を入れるといいのかも\n        var _this = this;\n        // 状態を更新して、内部バッファをcanvasに反映させる。\n        this.GameScene.update();\n        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);\n        this.ctx.drawImage(this.GameScene.draw(), 0, 0);\n        // ループ\n        window.requestAnimationFrame(function () { return _this.draw(); });\n    };\n    return Main;\n}());\nwindow.onload = function () {\n    new Main();\n};\n\n\n//# sourceURL=webpack:///./src/main.ts?");
 
 /***/ })
 

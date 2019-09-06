@@ -1,29 +1,35 @@
-import { BG } from "./BG";
+import { GameScene } from "./GameScene";
 
 class Main {
 	private readonly canvas: HTMLCanvasElement;
 	private readonly ctx: CanvasRenderingContext2D;
-	private BG: BG;
+	private GameScene: GameScene;
 
 	// タイマーイベント開始
 	constructor() {
+		// canvasを取得・設定
 		this.canvas = <HTMLCanvasElement>document.getElementById('canvas');
 		this.canvas.width = window.innerWidth;
 		this.canvas.height = window.innerHeight;
 		this.ctx = this.canvas.getContext('2d');
-		this.BG = new BG();
-		this.BG.drawBG();
+
+		// ゲーム画面を初期化
+		this.GameScene = new GameScene();
 		window.requestAnimationFrame(() => this.draw());
 	}
 
+	// TODO: タップイベントのリスナーを入れる？
+
 	// 更新と描画
 	draw() {
-		// update
+		// TODO: TitleかGameかResultか、みたいな分岐を入れるといいのかも
+
+		// 状態を更新して、内部バッファをcanvasに反映させる。
+		this.GameScene.update();
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.drawImage(this.BG.getBGimg(), 0, 0);
-		// this.ctx.fillStyle = "rgb(233, 214, 178)";
-		// this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-		// roop
+		this.ctx.drawImage(this.GameScene.draw(), 0, 0);
+
+		// ループ
 		window.requestAnimationFrame(() => this.draw());
 	}
 }
