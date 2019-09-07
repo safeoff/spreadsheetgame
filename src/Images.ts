@@ -18,6 +18,12 @@ export class Images {
 		// 画像読み込み
 		this.rough.src = rough;
 		this.left.src = left;
+		// canvasの幅と高さと拡大率
+		if (window.innerWidth > window.innerHeight) {
+			this.height = window.innerHeight;
+			this.width = this.height / 1.5;
+			this.scale = this.width / 480;
+		}
 	}
 
 	// 左手の状態を更新して位置を返す
