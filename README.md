@@ -1,3 +1,3 @@
-エクセルで作業する人のゲームです。  
+エビデンスを作るゲームです。  
 ↓デモ  
 https://safeoff.github.io/spreadsheetgame/
